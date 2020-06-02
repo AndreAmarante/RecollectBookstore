@@ -1,6 +1,8 @@
 package com.example.recollectbookstore.ui.home;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,31 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recollectbookstore.R;
+import com.example.recollectbookstore.adapter.DiscoverResultsAdapter;
+import com.example.recollectbookstore.entity.Item;
 
-public class HomeFragment extends Fragment {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class HomeFragment extends Fragment  {
 
     private HomeViewModel homeViewModel;
 
@@ -30,6 +53,10 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+
         return root;
     }
+
+
 }

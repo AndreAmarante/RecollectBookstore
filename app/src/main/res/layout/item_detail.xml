@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    >
+
+    <RelativeLayout
+        android:id="@+id/recommendation_top_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:alpha="1.0"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/logo1_" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+             />
+
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/recommendation_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:layout_alignLeft="@+id/item_name"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_close_white_24dp"
+            />
+
+        <TextView
+            android:id="@+id/item_name"
+            style="@style/AppTheme.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:text="@string/recommendation_name_placeholder" />
+
+        <TextView
+            android:id="@+id/recommendation_num_ratings"
+            style="@style/AppTheme.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_marginLeft="4dp"
+
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            tools:text="(10)" />
+
+        <TextView
+            android:id="@+id/recommendation_category"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/item_image"
+            android:layout_alignLeft="@+id/item_image"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/white"
+            tools:text="@string/recommendation_category_placeholder" />
+
+        <TextView
+            android:id="@+id/recommendation_city_divider"
+            style="@style/AppTheme.TextDivider"
+            android:layout_alignTop="@+id/recommendation_category"
+            android:layout_toRightOf="@+id/recommendation_category"
+            android:text="@string/divider_bullet"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/recommendation_city"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/recommendation_category"
+            android:layout_below="@+id/recommendation_category"
+            android:layout_toRightOf="@+id/recommendation_city_divider"
+            android:textColor="@android:color/white"
+            tools:text="@string/recommendation_local_placeholder" />
+
+
+    </RelativeLayout>
+
+    <!-- Ratings -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_ratings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recommendation_top_card"
+        android:background="@android:color/transparent"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"
+        android:paddingTop="28dp"
+        android:visibility="gone"
+        tools:listitem="@layout/item_comments" />
+
+    <!-- View for empty ratings -->
+    <LinearLayout
+        android:id="@+id/view_empty_ratings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/recommendation_top_card"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:src="@drawable/desert"
+            style="@style/AppTheme.Desert" />
+
+        <TextView
+            style="@style/AppTheme.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_no_reviews"
+            android:textColor="@color/greyDisabled" />
+
+    </LinearLayout>
+
+</RelativeLayout>

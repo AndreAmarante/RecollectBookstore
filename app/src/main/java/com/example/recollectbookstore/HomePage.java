@@ -1,9 +1,15 @@
 package com.example.recollectbookstore;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -14,6 +20,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recollectbookstore.adapter.DiscoverResultsAdapter;
 import com.example.recollectbookstore.entity.Item;
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,9 +28,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import okhttp3.Call;
@@ -32,6 +43,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -40,63 +52,38 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HomePage extends AppCompatActivity {
-
-    private AppBarConfiguration mAppBarConfiguration;
-    private RecyclerView mSearchResultsRecycler;
-    //private DiscoverResultsAdapter resultsAdapter;
+public class HomePage extends AppCompatActivity implements DiscoverResultsAdapter.OnItemSelectedListener{
+    private DiscoverResultsAdapter resultsAdapter;
+    private LinkedHashMap<String, Item> mItens;
+    private RecyclerView itemRecycler;
+    private ViewGroup mEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.home_page);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        itemRecycler=findViewById(R.id.recycler_itens);
+        mEmptyView =findViewById(R.id.view_empty);
+        initRecyclerView();
 
-        mSearchResultsRecycler = findViewById(R.id.recycler_search_discover);
+        getBooksForSale();
 
-        //initRecyclerView();
-
-        apiTest();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_page, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
     }
 
     private void initRecyclerView() {
 
 
-        //resultsAdapter = new DiscoverResultsAdapter(searchResults, this);
-        mSearchResultsRecycler.setLayoutManager(new LinearLayoutManager(this));
-        //mSearchResultsRecycler.setAdapter(resultsAdapter);
+        resultsAdapter = new DiscoverResultsAdapter(mItens, this);
+
+        itemRecycler.setLayoutManager(new LinearLayoutManager(this));
+        itemRecycler.setAdapter(resultsAdapter);
 
     }
 
-    private void apiTest(){
-        String url = "http://192.168.160.59:8080/api/items";
+    private void getBooksForSale(){
+        mItens = new LinkedHashMap<>();
+        String url = "http://192.168.160.59:8080/api/items?category=BOOKS&sold=false";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -112,14 +99,14 @@ public class HomePage extends AppCompatActivity {
                 call.cancel();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
+                Log.d("Success", "");
                 final String myResponse = response.body().string();
 
-
-                Log.e("items: ", myResponse);
-                System.out.println(myResponse);
+                //Log.e("items: ", myResponse);
+                //System.out.println(myResponse);
 
                 try {
                     JSONArray jsonArr = new JSONArray(myResponse);
@@ -133,15 +120,31 @@ public class HomePage extends AppCompatActivity {
                         String description = json.get("description").toString();
 
                         ArrayList<String> images = new ArrayList<>();
-                        String str[] = json.get("images").toString().split(",");
-                        images = (ArrayList<String>) Arrays.asList(str);
+                        JSONArray jsonArrayImages = (JSONArray) json.get("images");
 
-                        Date creationDate = new SimpleDateFormat("dd/MM/yyyy").parse(json.get("creationDate").toString());
+                        for(int i=0; i<jsonArrayImages.length(); i++){
+                            //Log.e(i + "",jsonArrayImages.get(i).toString());
+                            images.add(jsonArrayImages.get(i).toString());
+                        }
+
+                        String date = json.get("creationDate").toString().split("T")[0];
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        LocalDate creationDate = LocalDate.parse(date, formatter);
+
 
                         String category = json.get("category").toString();
                         Item item = new Item(id,name,quantity,price,description,images,creationDate, category);
+                        mItens.put(item.getId().toString(),item);
                     }
-                } catch (JSONException | ParseException e) {
+
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            resultsAdapter.updateResults(mItens);
+                        }
+                    });
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -152,4 +155,20 @@ public class HomePage extends AppCompatActivity {
 
     }
 
+    //TODO: Open item page
+    @Override
+    public void onItemSelected(String itemDocID) {
+
+        Intent intent = new Intent(this, ItemDetailActivity.class);
+        intent.putExtra(ItemDetailActivity.ITEMID, itemDocID);
+        startActivity(intent);
     }
+
+
+
+
+
+
+
+
+}

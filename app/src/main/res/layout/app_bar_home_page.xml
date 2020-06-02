@@ -22,17 +22,7 @@
 
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_search_discover"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/search_top_card"
-            android:background="@android:color/transparent"
-            android:clipToPadding="false"
-            android:paddingBottom="16dp"
-            android:paddingTop="28dp"
-            android:visibility="gone"
-            tools:listitem="@layout/item_recommendation" />
+
 
 
 
