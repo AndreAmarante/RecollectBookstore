@@ -26,14 +26,17 @@
             android:layout_height="200dp"
              />
 
+
+
         <!-- Back button -->
         <ImageView
-            android:id="@+id/recommendation_button_back"
+            android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:layout_alignLeft="@+id/item_name"
             android:layout_marginTop="16dp"
+            android:onClick="onBackArrowClicked"
             app:srcCompat="@drawable/ic_close_white_24dp"
             />
 
@@ -42,63 +45,93 @@
             style="@style/AppTheme.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_below="@+id/item_image"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textStyle="bold"
             tools:text="@string/recommendation_name_placeholder" />
 
         <TextView
-            android:id="@+id/recommendation_num_ratings"
-            style="@style/AppTheme.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-
-            android:layout_marginLeft="4dp"
-
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            tools:text="(10)" />
-
-        <TextView
-            android:id="@+id/recommendation_category"
+            android:id="@+id/item_category"
             style="@style/AppTheme.Subheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/item_image"
-            android:layout_alignLeft="@+id/item_image"
+            android:layout_below="@+id/item_name"
+            android:layout_alignLeft="@+id/item_name"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             tools:text="@string/recommendation_category_placeholder" />
 
         <TextView
             android:id="@+id/recommendation_city_divider"
             style="@style/AppTheme.TextDivider"
-            android:layout_alignTop="@+id/recommendation_category"
-            android:layout_toRightOf="@+id/recommendation_category"
+            android:layout_alignTop="@+id/item_category"
+            android:layout_toEndOf="@+id/item_category"
             android:text="@string/divider_bullet"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
         <TextView
-            android:id="@+id/recommendation_city"
+            android:id="@+id/item_date"
             style="@style/AppTheme.Subheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/recommendation_category"
-            android:layout_below="@+id/recommendation_category"
+            android:layout_alignTop="@+id/item_category"
+            android:layout_below="@+id/item_category"
             android:layout_toRightOf="@+id/recommendation_city_divider"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             tools:text="@string/recommendation_local_placeholder" />
 
+        <TextView
+            android:id="@+id/item_price"
+            style="@style/AppTheme.Subheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_category"
+            android:layout_alignLeft="@+id/item_category"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/black"
+            tools:text="@string/recommendation_category_placeholder" />
 
+        <TextView
+            android:id="@+id/item_price_divider"
+            style="@style/AppTheme.TextDivider"
+            android:layout_alignTop="@+id/item_price"
+            android:layout_toEndOf="@+id/item_price"
+            android:text="@string/divider_bullet"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/item_quantity"
+            style="@style/AppTheme.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/item_price"
+            android:layout_below="@+id/item_price"
+            android:layout_toEndOf="@+id/item_price_divider"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            tools:text="(10)" />
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_show_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/recommendation_top_card"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="-28dp"
+        android:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="#FFFFFF"
+        android:onClick="seeUser"
+        app:srcCompat="@drawable/ic_person_white_24dp" />
 
     <!-- Ratings -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_ratings"
+        android:id="@+id/recycler_comments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/recommendation_top_card"
@@ -111,7 +144,7 @@
 
     <!-- View for empty ratings -->
     <LinearLayout
-        android:id="@+id/view_empty_ratings"
+        android:id="@+id/view_empty_comments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -130,7 +163,7 @@
             style="@style/AppTheme.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/message_no_reviews"
+            android:text="@string/message_no_comments"
             android:textColor="@color/greyDisabled" />
 
     </LinearLayout>

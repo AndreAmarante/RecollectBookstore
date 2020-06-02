@@ -40,4 +40,13 @@ public class Comment {
     public void setTimeStamp(LocalDate timeStamp) {
         this.timeStamp = timeStamp;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", commentText='" + commentText + '\'' +
+                ", timeStamp=" + timeStamp +
+                '}';
+    }
 }

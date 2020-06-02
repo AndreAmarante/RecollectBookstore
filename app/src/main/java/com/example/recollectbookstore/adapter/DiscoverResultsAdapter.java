@@ -54,6 +54,7 @@ public class DiscoverResultsAdapter extends RecyclerView.Adapter<DiscoverResults
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull DiscoverViewHolder holder, int position) {
         holder.bind(mItens, mListener, position);

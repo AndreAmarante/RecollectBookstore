@@ -8,7 +8,7 @@
     android:paddingRight="16dp">
 
     <TextView
-        android:id="@+id/rating_item_name"
+        android:id="@+id/comment_date"
         style="@style/AppTheme.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,9 +24,10 @@
         style="@style/AppTheme.TextDivider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/rating_item_name"
+        android:layout_toRightOf="@+id/comment_date"
         android:text="@string/divider_bullet" />
 
+    <!--
     <TextView
         android:id="@+id/rating_item_date"
         style="@style/AppTheme.Body1"
@@ -36,13 +37,14 @@
 
         android:layout_toRightOf="@+id/rating_item_divider"
         tools:text="9/27/2017" />
+    -->
 
     <TextView
-        android:id="@+id/rating_item_text"
+        android:id="@+id/comment_text"
         style="@style/AppTheme.Subheader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rating_item_name"
+        android:layout_below="@+id/comment_date"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
         android:textColor="@color/greyPrimary"
@@ -50,7 +52,7 @@
 
     <View
         style="@style/AppTheme.Divider"
-        android:layout_below="@id/rating_item_text"
+        android:layout_below="@id/comment_text"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"/>
 </RelativeLayout>

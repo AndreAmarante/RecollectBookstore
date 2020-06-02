@@ -1,15 +1,21 @@
 package com.example.recollectbookstore;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.recollectbookstore.adapter.CommentAdapter;
 import com.example.recollectbookstore.entity.Comment;
 import com.example.recollectbookstore.entity.Item;
 import com.example.recollectbookstore.entity.User;
@@ -33,11 +39,21 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ItemDetailActivity extends AppCompatActivity {
+public class ItemDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String ITEMID = "itemID";
     private TextView item_name_View;
+    private TextView item_category;
     private ImageView item_image_View;
+    private TextView item_date;
+    private TextView item_price;
+    private TextView item_quantity;
+    private CommentAdapter commentAdapter;
+    private ArrayList<Comment> mComments;
+    private RecyclerView commentsRecycler;
+    private ViewGroup emptyView;
+
+    private long globalOwnerID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +69,21 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         item_name_View = findViewById(R.id.item_name);
         item_image_View = findViewById(R.id.item_image);
+        item_category = findViewById(R.id.item_category);
+        item_date = findViewById(R.id.item_date);
+        item_price = findViewById(R.id.item_price);
+        item_quantity = findViewById(R.id.item_quantity);
+        commentsRecycler = findViewById(R.id.recycler_comments);
+        emptyView = findViewById(R.id.view_empty_comments);
+
+        commentAdapter = new CommentAdapter(mComments);
+
+        commentsRecycler.setLayoutManager(new LinearLayoutManager(this));
+        commentsRecycler.setAdapter(commentAdapter);
+
+        commentAdapter.onChanged(commentsRecycler, emptyView);
 
         getItemDetails(itemID);
-
-
-
     }
 
     private void getItemDetails(String id){
@@ -113,6 +139,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
                     JSONObject jsonOwner = json.getJSONObject("owner");
                     long ownerID = Long.parseLong(jsonOwner.get("id").toString());
+                    globalOwnerID = ownerID;
                     String ownerName = jsonOwner.get("name").toString();
                     String ownerEmail = jsonOwner.get("email").toString();
                     String ownerPhone = jsonOwner.get("phone").toString();
@@ -124,6 +151,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
                     ArrayList<Comment> comments = new ArrayList<>();
                     JSONArray commentsArray = json.getJSONArray("comment");
+                    Log.e("comments", commentsArray.length() + "");
                     for(int i=0; i<commentsArray.length(); i++){
                         JSONObject comment = commentsArray.getJSONObject(i);
 
@@ -142,6 +170,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                      item.setOwner(owner);
                      item.setComments(comments);
 
+
                      //Update UI
                     runOnUiThread(new Runnable() {
                         @Override
@@ -151,13 +180,17 @@ public class ItemDetailActivity extends AppCompatActivity {
                             Glide.with(item_image_View.getContext())
                                     .load(item.getFirstImage())
                                     .into(item_image_View);
+                            item_category.setText(item.getCategory());
+                            item_date.setText(item.getCreationDate().toString());
+                            item_price.setText(item.getPrice() + " €");
+                            item_quantity.setText("(" + item.getQuantity() + ")");
+
+                            mComments = item.getComments();
+                            commentAdapter.updateResults(mComments);
+                            commentAdapter.onChanged(commentsRecycler, emptyView);
 
                         }
                     });
-
-
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -168,4 +201,36 @@ public class ItemDetailActivity extends AppCompatActivity {
         });
 
     }
+
+    public void seeUser(View view) {
+
+        if(globalOwnerID!=-1){
+            Intent intent = new Intent(this, UserDetailActivity.class);
+            intent.putExtra(UserDetailActivity.OWNERID, globalOwnerID);
+            startActivity(intent);
+        }else{
+            //TODO: Show message, no user data to show
+        }
+
+    }
+    public void onBackArrowClicked(View view) {
+        onBackPressed();
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.e("-----", "clicou");
+        switch (view.getId()) {
+            case R.id.button_back:
+                onBackArrowClicked(view);
+                break;
+            case R.id.fab_show_user:
+                seeUser(view);
+                break;
+        }
+
+
+    }
+
+
 }

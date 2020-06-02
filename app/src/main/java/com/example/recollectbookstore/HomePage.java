@@ -155,7 +155,7 @@ public class HomePage extends AppCompatActivity implements DiscoverResultsAdapte
 
     }
 
-    //TODO: Open item page
+
     @Override
     public void onItemSelected(String itemDocID) {
 
