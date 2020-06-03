@@ -130,8 +130,8 @@ public class ItemDetailActivity extends AppCompatActivity {
                     }
 
                     String date = json.get("creationDate").toString().split("T")[0];
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate creationDate = LocalDate.parse(date, formatter);
+                    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    //LocalDate creationDate = LocalDate.parse(date, formatter);
 
                     String category = json.get("category").toString();
                     long ownerID = -1;
@@ -156,14 +156,14 @@ public class ItemDetailActivity extends AppCompatActivity {
                         String commentText = comment.get("text").toString();
 
                         String dateComment = comment.get("timestamp").toString().split("T")[0];
-                        DateTimeFormatter formatterComment = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                        LocalDate timestamp = LocalDate.parse(date, formatter);
+                        //DateTimeFormatter formatterComment = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        //LocalDate timestamp = LocalDate.parse(date, formatterComment);
 
-                        Comment actual_comment = new Comment( commentID,  commentText,  timestamp);
+                        Comment actual_comment = new Comment( commentID,  commentText,  dateComment);
                         comments.add(actual_comment);
                     }
 
-                     final Item item = new Item(id,name,quantity,price,description,images,creationDate, category);
+                     final Item item = new Item(id,name,quantity,price,description,images,date, category);
                      item.setComments(comments);
 
                      //Update UI

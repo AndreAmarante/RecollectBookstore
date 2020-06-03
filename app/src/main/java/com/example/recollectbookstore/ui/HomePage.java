@@ -107,11 +107,11 @@ public class HomePage extends AppCompatActivity implements DiscoverResultsAdapte
                         }
 
                         String date = json.get("creationDate").toString().split("T")[0];
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                        LocalDate creationDate = LocalDate.parse(date, formatter);
+                        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        //LocalDate creationDate = LocalDate.parse(date, formatter);
 
                         String category = json.get("category").toString();
-                        Item item = new Item(id,name,quantity,price,description,images,creationDate, category);
+                        Item item = new Item(id,name,quantity,price,description,images,date, category);
                         mItens.put(item.getId().toString(),item);
                     }
 

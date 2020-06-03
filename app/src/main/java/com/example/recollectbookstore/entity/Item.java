@@ -16,12 +16,12 @@ public class Item {
     private String category;
     private double price;
     private int quantity;
-    private LocalDate creationDate;
+    private String creationDate;
     private ArrayList<Comment> comments;
     private User owner;
 
     public Item(Long id, String name, int quantity, double price, String description, ArrayList<String> images,
-                 LocalDate creationDate, String category){
+                String creationDate, String category){
         this.id = id;
         this.images = images;
         this.name = name;
@@ -34,7 +34,7 @@ public class Item {
 
     //Used in ItemDetail
     public Item(Long id, String name, int quantity, double price, String description, ArrayList<String> images,
-                LocalDate creationDate, String category, ArrayList<Comment> comments, User owner ){
+                String creationDate, String category, ArrayList<Comment> comments, User owner ){
         this.id = id;
         this.images = images;
         this.name = name;
@@ -107,11 +107,11 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public LocalDate getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

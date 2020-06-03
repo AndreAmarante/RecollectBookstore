@@ -8,10 +8,10 @@ public class Comment {
 
     private Long id;
     private String commentText;
-    private LocalDate timeStamp;
+    private String timeStamp;
 
 
-    public Comment(Long id, String commentText, LocalDate timeStamp){
+    public Comment(Long id, String commentText, String timeStamp){
         this.id = id;
         this.commentText = commentText;
         this.timeStamp = timeStamp;
@@ -33,11 +33,11 @@ public class Comment {
         this.commentText = commentText;
     }
 
-    public LocalDate getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(LocalDate timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
 
