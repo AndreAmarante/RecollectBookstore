@@ -4,53 +4,17 @@
     <string name="project_title">Recollect Bookstore</string>
     <string name="enter_button">Enter</string>
     <string name="title_activity_home_page">HomePage</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">Bookstore with Recollect integration</string>
     <string name="nav_header_desc">Bookstore</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-
-    <string name="home_second">Home Second</string>
     <string name="search_prompt">search_prompt</string>
     <string name="message_no_results">Sorry, no results!</string>
-
-
-    <!--||||||||||||||||||||||||||||||||||||||||||||||||-->
-    <!-- Strings related to itens TODO:Clean -->
-    <string name="fmt_num_ratings" translatable="false">(%d)</string>
     <string name="divider_bullet">•</string>
-    <string name="recommendation_name_placeholder">Museu da Arte Nova</string>
-    <string name="rec_desc_placeholder">A picturesque place with good views of city</string>
-    <string name="recommendation_local_placeholder">Aveiro</string>
-    <string name="recommendation_category_placeholder"><![CDATA[See & Do]]></string>
-    <string name="Password_min">Password precisa no mínimo de 6 dígitos!</string>
-    <string name="invalid_email">Email inválido!</string>
-    <string name="invalid_name">Insira um nome!</string>
-    <string name="preference_file_key">personal_data</string>
-    <string name="name">name</string>
-    <string name="email">email</string>
-    <string name="profile_pass_title">Current Password</string>
-    <string name="profile_new_pass_title">New Password</string>
-    <string name="profile_email_title">Email</string>
-    <string name="myMapInfo">Para adicionar marcador de país já visitado, clique 2 segundos sobre o país! Se clicar nos marcadores criados, tem a possibilidade de eliminá-lo! Icons made by &lt; a href="https://www.flaticon.com/authors/freepik">link1&lt;/a>"</string>
-    <string name="change_password">Change Password</string>
-    <string name="buttonSavePass">Save New Password</string>
-    <string name="filter_add_review">Add review</string>
-    <string name="hint_review">How was your experience?</string>
-    <string name="cancel">Cancel</string>
-    <string name="submit">Submit</string>
-    <string name="message_no_reviews">Be the first to leave a review!</string>
-    <string name="message_no_categories">Oops, couldn\'t find any categories</string>
-    <string name="item_local_placeholder">Local</string>
-    <string name="item_category_placeholder">Category</string>
-    <string name="item_name_placeholder">Title</string>
-    <string name="item_date_placeholder">Date</string>
-    <string name="message_no_comments">No comments yet!</string>
     <string name="available_units">Available units:&#032;</string>
     <string name="euro_sign">€</string>
+    <string name="item_name_placeholder">Book</string>
+    <string name="item_desc_placeholder">Description here</string>
+    <string name="message_no_comments">No comments yet!</string>
+    <string name="item_category_placeholder">Category</string>
+    <string name="item_date_placeholder">0000-00-00</string>
+    <string name="comment_placeholder">Comment here</string>
+    <string name="no_user">No user data to show</string>
 </resources>

@@ -70,7 +70,7 @@
             android:layout_marginTop="8dp"
             android:textColor="@android:color/secondary_text_light"
             android:textStyle="bold"
-            tools:text="@string/recommendation_name_placeholder" />
+            tools:text="@string/item_name_placeholder" />
 
         <TextView
             android:id="@+id/item_category"
@@ -82,7 +82,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@android:color/secondary_text_light"
-            tools:text="@string/recommendation_category_placeholder" />
+            tools:text="@string/item_category_placeholder" />
 
         <TextView
             android:id="@+id/recommendation_city_divider"
@@ -101,7 +101,7 @@
             android:layout_below="@+id/item_category"
             android:layout_toRightOf="@+id/recommendation_city_divider"
             android:textColor="@android:color/secondary_text_light"
-            tools:text="@string/recommendation_local_placeholder" />
+            tools:text="@string/item_date_placeholder" />
 
         <TextView
             android:id="@+id/item_availableUnitsLabel"
@@ -170,7 +170,7 @@
         tools:visibility="visible">
 
         <ImageView
-            android:src="@drawable/desert"
+            android:src="@drawable/book"
             style="@style/AppTheme.Desert" />
 
         <TextView

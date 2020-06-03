@@ -1,7 +1,6 @@
-package com.example.recollectbookstore;
+package com.example.recollectbookstore.ui;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,21 +16,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.recollectbookstore.R;
 import com.example.recollectbookstore.adapter.CommentAdapter;
 import com.example.recollectbookstore.entity.Comment;
 import com.example.recollectbookstore.entity.Item;
-import com.example.recollectbookstore.entity.User;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -40,7 +36,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ItemDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class ItemDetailActivity extends AppCompatActivity {
 
     public static final String ITEMID = "itemID";
     private TextView item_name_View;
@@ -78,15 +74,20 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         emptyView = findViewById(R.id.view_empty_comments);
 
         commentAdapter = new CommentAdapter(mComments);
-
         commentsRecycler.setLayoutManager(new LinearLayoutManager(this));
         commentsRecycler.setAdapter(commentAdapter);
-
         commentAdapter.onChanged(commentsRecycler, emptyView);
 
+        //API call
         getItemDetails(itemID);
     }
 
+    /**
+     *
+     * @param id - Book's id
+     *
+     * API Call and data processing to show the book's details to the user
+     */
     private void getItemDetails(String id){
         final long idLong = Long.parseLong(id);
 
@@ -101,20 +102,16 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("items: ", "failure");
-                Log.e("items: ", e.getMessage());
+                Log.e("Fail", "API call failed");
+                Log.e("Fail", e.getMessage());
                 call.cancel();
             }
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("Success", "");
+                Log.d("Success", "Success calling the API");
                 final String myResponse = response.body().string();
-
-                Log.e("Id selecionado", idLong + "");
-                Log.e("ItemDetailedSuccess", myResponse);
-                //System.out.println(myResponse);
 
                 try {
                     JSONObject json = new JSONObject(myResponse);
@@ -137,22 +134,21 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
                     LocalDate creationDate = LocalDate.parse(date, formatter);
 
                     String category = json.get("category").toString();
+                    long ownerID = -1;
 
-                    JSONObject jsonOwner = json.getJSONObject("owner");
-                    long ownerID = Long.parseLong(jsonOwner.get("id").toString());
+                    try{
+                        JSONObject jsonOwner = json.getJSONObject("owner");
+                        ownerID = Long.parseLong(jsonOwner.get("id").toString());
+
+                    }catch(Exception e){
+                        //Enters here if owner is just the ID and not a JSONObject
+                        ownerID = Long.parseLong(json.get("owner").toString());
+                    }
                     globalOwnerID = ownerID;
-                    String ownerName = jsonOwner.get("name").toString();
-                    String ownerEmail = jsonOwner.get("email").toString();
-                    String ownerPhone = jsonOwner.get("phone").toString();
-                    JSONObject location = jsonOwner.getJSONObject("location");
-                    String ownerCity = location.get("county").toString();
-                    String ownerDistrict = location.get("district").toString();
-
-                    User owner = new User(ownerID, ownerName, ownerEmail, ownerPhone, ownerCity, ownerDistrict);
 
                     ArrayList<Comment> comments = new ArrayList<>();
                     JSONArray commentsArray = json.getJSONArray("comment");
-                    Log.e("comments", commentsArray.length() + "");
+
                     for(int i=0; i<commentsArray.length(); i++){
                         JSONObject comment = commentsArray.getJSONObject(i);
 
@@ -168,9 +164,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
                     }
 
                      final Item item = new Item(id,name,quantity,price,description,images,creationDate, category);
-                     item.setOwner(owner);
                      item.setComments(comments);
-
 
                      //Update UI
                     runOnUiThread(new Runnable() {
@@ -203,6 +197,12 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    /**
+     *
+     * @param view
+     * Method called from the interface User Button to go to the UserDetailActivity
+     * and call the API from there
+     */
     public void seeUser(View view) {
 
         if(globalOwnerID!=-1){
@@ -210,28 +210,21 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
             intent.putExtra(UserDetailActivity.OWNERID, globalOwnerID);
             startActivity(intent);
         }else{
-            //TODO: Show message, no user data to show
+            Toast.makeText(this, R.string.no_user, Toast.LENGTH_SHORT).show();
         }
 
     }
+
+    /**
+     *
+     * @param view
+     * Go to the previous activity (HomePage)
+     */
     public void onBackArrowClicked(View view) {
         onBackPressed();
     }
 
-    @Override
-    public void onClick(View view) {
-        Log.e("-----", "clicou");
-        switch (view.getId()) {
-            case R.id.button_back:
-                onBackArrowClicked(view);
-                break;
-            case R.id.fab_show_user:
-                seeUser(view);
-                break;
-        }
 
-
-    }
 
 
 }

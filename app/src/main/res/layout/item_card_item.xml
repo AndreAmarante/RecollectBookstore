@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/item_item_quantity"
             android:padding="8dp"
-            android:text="@string/rec_desc_placeholder"
+            android:text="@string/item_desc_placeholder"
             android:textColor="?android:textColorSecondary" />
 
 

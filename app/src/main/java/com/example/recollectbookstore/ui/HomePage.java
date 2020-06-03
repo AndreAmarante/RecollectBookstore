@@ -1,52 +1,32 @@
-package com.example.recollectbookstore;
+package com.example.recollectbookstore.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recollectbookstore.R;
 import com.example.recollectbookstore.adapter.DiscoverResultsAdapter;
 import com.example.recollectbookstore.entity.Item;
-import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,24 +43,27 @@ public class HomePage extends AppCompatActivity implements DiscoverResultsAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
 
+        //Initialize recycler and adapter to receive books from API
         itemRecycler=findViewById(R.id.recycler_itens);
         mEmptyView =findViewById(R.id.view_empty);
         initRecyclerView();
 
+        //API call in this methos
         getBooksForSale();
-
     }
 
+    /**
+     * Initialize adapter + link it to recycler view
+     */
     private void initRecyclerView() {
-
-
         resultsAdapter = new DiscoverResultsAdapter(mItens, this);
-
         itemRecycler.setLayoutManager(new LinearLayoutManager(this));
         itemRecycler.setAdapter(resultsAdapter);
-
     }
 
+    /**
+     * API call itself, processing the received data and passing it to the RecyclerView
+     */
     private void getBooksForSale(){
         mItens = new LinkedHashMap<>();
         String url = "http://192.168.160.59:8080/api/items?category=BOOKS&sold=false";
@@ -94,19 +77,16 @@ public class HomePage extends AppCompatActivity implements DiscoverResultsAdapte
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("items: ", "failure");
-                Log.e("items: ", e.getMessage());
+                Log.e("Fail", "API call failed");
+                Log.e("Fail: ", e.getMessage());
                 call.cancel();
             }
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("Success", "");
+                Log.d("Success", "Success calling the API");
                 final String myResponse = response.body().string();
-
-                //Log.e("items: ", myResponse);
-                //System.out.println(myResponse);
 
                 try {
                     JSONArray jsonArr = new JSONArray(myResponse);
@@ -123,14 +103,12 @@ public class HomePage extends AppCompatActivity implements DiscoverResultsAdapte
                         JSONArray jsonArrayImages = (JSONArray) json.get("images");
 
                         for(int i=0; i<jsonArrayImages.length(); i++){
-                            //Log.e(i + "",jsonArrayImages.get(i).toString());
                             images.add(jsonArrayImages.get(i).toString());
                         }
 
                         String date = json.get("creationDate").toString().split("T")[0];
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         LocalDate creationDate = LocalDate.parse(date, formatter);
-
 
                         String category = json.get("category").toString();
                         Item item = new Item(id,name,quantity,price,description,images,creationDate, category);
@@ -147,28 +125,31 @@ public class HomePage extends AppCompatActivity implements DiscoverResultsAdapte
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
-
-
     }
 
 
+    /**
+     *
+     * @param itemDocID - the clicked book's id
+     *
+     * Go to ItemDetailActivity, passing the book's id for the next API call
+     */
     @Override
     public void onItemSelected(String itemDocID) {
-
         Intent intent = new Intent(this, ItemDetailActivity.class);
         intent.putExtra(ItemDetailActivity.ITEMID, itemDocID);
         startActivity(intent);
     }
 
-
-
-
-
-
-
-
+    /**
+     *
+     * @param view
+     *
+     * Go back to MainActivity (initial home page)
+     */
+    public void onBackArrowClicked(View view) {
+        onBackPressed();
+    }
 }
