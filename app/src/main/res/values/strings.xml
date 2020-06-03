@@ -51,4 +51,6 @@
     <string name="item_name_placeholder">Title</string>
     <string name="item_date_placeholder">Date</string>
     <string name="message_no_comments">No comments yet!</string>
+    <string name="available_units">Available units:&#032;</string>
+    <string name="euro_sign">€</string>
 </resources>

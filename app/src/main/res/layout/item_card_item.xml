@@ -17,6 +17,25 @@
             android:src="@mipmap/logo1_"
             android:scaleType="centerCrop"/>
 
+        <TextView
+            android:id="@+id/item_item_price"
+            style="@style/AppTheme.PriceTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_alignStart="@+id/item_item_name"
+            android:layout_marginTop="16dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            tools:text="200 €"
+            android:textSize="@dimen/activity_horizontal_margin"/>
+
 
         <TextView
             android:id="@+id/item_item_name"
@@ -24,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_item_image"
-            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
             android:paddingTop="8dp"
             android:text="@string/item_name_placeholder" />
 
@@ -33,42 +52,46 @@
             style="@style/AppTheme.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/item_item_name"
+            android:layout_alignStart="@+id/item_item_name"
             android:layout_below="@+id/item_item_name"
             android:textColor="@color/greySecondary"
             tools:text="@string/item_category_placeholder"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginStart="8dp"/>
 
         <TextView
-            android:id="@+id/item_item_price"
+            android:id="@+id/item_item_quantityPrompt"
             style="@style/AppTheme.Body1"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_item_category"
-            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_alignStart="@+id/item_item_name"
             android:gravity="center_vertical"
             android:textColor="@color/greySecondary"
-            tools:text="(10)" />
+            tools:text="@string/available_units" />
 
         <TextView
             android:id="@+id/item_item_quantity"
             style="@style/AppTheme.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/item_item_price"
-            android:layout_alignBottom="@+id/item_item_price"
-            android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@+id/item_item_price"
+            android:layout_alignTop="@+id/item_item_quantityPrompt"
+            android:layout_alignBottom="@+id/item_item_quantityPrompt"
+            android:layout_marginStart="4dp"
+            android:layout_below="@id/item_item_category"
+            android:layout_toEndOf="@+id/item_item_quantityPrompt"
             android:gravity="center_vertical"
             android:textColor="@color/greyDisabled"
-            tools:text="(10)" />
+            tools:text="10" />
 
         <TextView
             android:id="@+id/item_item_descricao"
             style="@style/itemDescriptionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_item_price"
+            android:layout_below="@id/item_item_quantity"
             android:padding="8dp"
             android:text="@string/rec_desc_placeholder"
             android:textColor="?android:textColorSecondary" />
@@ -79,7 +102,7 @@
             android:id="@+id/item_item_local_divider"
             style="@style/AppTheme.TextDivider"
             android:layout_alignTop="@+id/item_item_category"
-            android:layout_toRightOf="@+id/item_item_category"
+            android:layout_toEndOf="@+id/item_item_category"
             android:text="@string/divider_bullet" />
 
         <TextView
@@ -88,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/item_item_category"
-            android:layout_toRightOf="@+id/item_item_local_divider"
+            android:layout_toEndOf="@+id/item_item_local_divider"
             android:textColor="@color/greySecondary"
             tools:text="@string/item_date_placeholder" />
 

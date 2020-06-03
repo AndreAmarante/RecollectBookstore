@@ -103,9 +103,8 @@ public class DiscoverResultsAdapter extends RecyclerView.Adapter<DiscoverResults
                     .into(imageView);
 
             nameView.setText(item.getName());
-            priceView.setText(String.valueOf(item.getPrice()) + "€");
-            quantityView.setText(resources.getString(R.string.fmt_num_ratings,
-                    item.getQuantity()));
+            priceView.setText(item.getPrice() + " €");
+            quantityView.setText("Available units: " + item.getQuantity());
             categoryView.setText(item.getCategory());
 
             Log.e("data", item.getCreationDate().toString());

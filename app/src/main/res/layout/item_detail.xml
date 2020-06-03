@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0E0E0"
+    android:background="#FFFFFF"
     >
 
     <RelativeLayout
         android:id="@+id/recommendation_top_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#DBE3F6"
         android:elevation="4dp">
 
         <ImageView
@@ -21,10 +22,29 @@
             android:scaleType="centerCrop"
             tools:src="@mipmap/logo1_" />
 
+
+        <TextView
+            android:id="@+id/item_price"
+            style="@style/AppTheme.PriceTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/activity_horizontal_margin"
+            tools:text="200 €" />
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-             />
+            android:layout_height="200dp" />
 
 
 
@@ -48,7 +68,7 @@
             android:layout_below="@+id/item_image"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/secondary_text_light"
             android:textStyle="bold"
             tools:text="@string/recommendation_name_placeholder" />
 
@@ -61,7 +81,7 @@
             android:layout_alignLeft="@+id/item_name"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/secondary_text_light"
             tools:text="@string/recommendation_category_placeholder" />
 
         <TextView
@@ -70,7 +90,7 @@
             android:layout_alignTop="@+id/item_category"
             android:layout_toEndOf="@+id/item_category"
             android:text="@string/divider_bullet"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/secondary_text_light" />
 
         <TextView
             android:id="@+id/item_date"
@@ -80,40 +100,34 @@
             android:layout_alignTop="@+id/item_category"
             android:layout_below="@+id/item_category"
             android:layout_toRightOf="@+id/recommendation_city_divider"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/secondary_text_light"
             tools:text="@string/recommendation_local_placeholder" />
 
         <TextView
-            android:id="@+id/item_price"
+            android:id="@+id/item_availableUnitsLabel"
             style="@style/AppTheme.Subheader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/item_category"
-            android:layout_alignLeft="@+id/item_category"
+            android:layout_alignStart="@+id/item_category"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@android:color/black"
-            tools:text="@string/recommendation_category_placeholder" />
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/secondary_text_light"
+            tools:text="@string/available_units" />
 
-        <TextView
-            android:id="@+id/item_price_divider"
-            style="@style/AppTheme.TextDivider"
-            android:layout_alignTop="@+id/item_price"
-            android:layout_toEndOf="@+id/item_price"
-            android:text="@string/divider_bullet"
-            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/item_quantity"
             style="@style/AppTheme.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/item_price"
-            android:layout_below="@+id/item_price"
-            android:layout_toEndOf="@+id/item_price_divider"
+            android:layout_alignTop="@+id/item_availableUnitsLabel"
+            android:layout_below="@+id/item_availableUnitsLabel"
+            android:layout_toEndOf="@+id/item_availableUnitsLabel"
             android:gravity="center"
-            android:textColor="@android:color/black"
-            tools:text="(10)" />
+            android:textColor="@android:color/secondary_text_light"
+            tools:text="10" />
     </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

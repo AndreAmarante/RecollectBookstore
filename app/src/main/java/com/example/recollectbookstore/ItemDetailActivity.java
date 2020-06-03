@@ -1,6 +1,7 @@
 package com.example.recollectbookstore;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -183,7 +184,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
                             item_category.setText(item.getCategory());
                             item_date.setText(item.getCreationDate().toString());
                             item_price.setText(item.getPrice() + " €");
-                            item_quantity.setText("(" + item.getQuantity() + ")");
+                            item_quantity.setText("Available units: " + item.getQuantity());
 
                             mComments = item.getComments();
                             commentAdapter.updateResults(mComments);

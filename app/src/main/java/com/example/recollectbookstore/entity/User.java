@@ -6,15 +6,15 @@ public class User {
     private String name;
     private String email;
     private String phone;
-    private String city;
+    private String municipality;
     private String district;
 
-    public User(Long id, String name, String email, String phone, String city, String district ) {
+    public User(Long id, String name, String email, String phone, String municipality, String district ) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.city = city;
+        this.municipality = municipality;
         this.district = district;
     }
 
@@ -50,12 +50,12 @@ public class User {
         this.phone = phone;
     }
 
-    public String getCity() {
-        return city;
+    public String getMunicipality() {
+        return municipality;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setMunicipality(String municipality) {
+        this.municipality = municipality;
     }
 
     public String getDistrict() {
